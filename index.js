@@ -36,22 +36,23 @@ function megjelenit() {
     })
 }
 
+async function adatLeker() {
+    try {
+        let response = await fetch('http://localhost:8080/todos')
+        if (!response.ok){
+            throw new Error("HTTP hiba" + response.statusText)
+        }
+        let eredmeny = await response.json()
+        todoLista = eredmeny
+        console.log(eredmeny)
+        megjelenit()
+    } catch (error){
+        window.alert('HIBA!!! ' + error.message)
+    }}
+
 
 window.addEventListener("DOMContentLoaded", function() {
-        fetch('http://localhost:8080/todos')
-            .then(function(response) {
-                if (!response.ok){
-                    throw new Error("HTTP hiba: " + response.statusText)
-                }else{
-                    return response.json()
-                }
-            }).then(function(eredmeny) {
-                todoLista = eredmeny
-                console.log(eredmeny)
-                megjelenit()
-            }).catch(function(error) {
-                window.alert("HIBA!!!" + error.message)
-            })
+    adatLeker()
 
         document.getElementById("todoButton")
             .addEventListener("click", function(){
